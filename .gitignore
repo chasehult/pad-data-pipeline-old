@@ -132,3 +132,5 @@ bin/
 
 pad-resources/*
 pad-game-data-slim/*
+
+.DS_Store
