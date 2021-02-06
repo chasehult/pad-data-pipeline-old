@@ -98,6 +98,7 @@ class Monster(SimpleSqlItem):
             awakenings=awakenings,
             super_awakenings=super_awakenings,
             inheritable=jp_card.inheritable,
+            stackable=jp_card.is_stackable,
             fodder_exp=int(jp_card.feed_xp_curve().value_at(max_level)),
             sell_gold=int(jp_card.sell_gold_curve().value_at(max_level)),
             sell_mp=jp_card.sell_mp,
@@ -110,8 +111,6 @@ class Monster(SimpleSqlItem):
             diff_awakenings=diff_awakenings,
             diff_leader_skill=diff_leader_skill,
             diff_active_skill=diff_active_skill,
-            pal_egg=False,
-            rem_egg=False,
             series_id=Series.UNSORTED_SERIES_ID,
             orb_skin_id=orb_skin_id,
             voice_id_jp=voice_id_jp,
@@ -152,6 +151,7 @@ class Monster(SimpleSqlItem):
                  awakenings: str = None,
                  super_awakenings: str = None,
                  inheritable: bool = None,
+                 stackable: bool = None,
                  fodder_exp: int = None,
                  sell_gold: int = None,
                  sell_mp: int = None,
@@ -164,8 +164,6 @@ class Monster(SimpleSqlItem):
                  diff_awakenings: bool = None,
                  diff_leader_skill: bool = None,
                  diff_active_skill: bool = None,
-                 pal_egg: bool = None,
-                 rem_egg: bool = None,
                  series_id: int = None,
                  orb_skin_id: int = None,
                  voice_id_jp: int = None,
@@ -205,6 +203,7 @@ class Monster(SimpleSqlItem):
         self.awakenings = awakenings
         self.super_awakenings = super_awakenings
         self.inheritable = inheritable
+        self.stackable = stackable
         self.fodder_exp = fodder_exp
         self.sell_gold = sell_gold
         self.sell_mp = sell_mp
@@ -217,8 +216,6 @@ class Monster(SimpleSqlItem):
         self.diff_awakenings = diff_awakenings
         self.diff_leader_skill = diff_leader_skill
         self.diff_active_skill = diff_active_skill
-        self.pal_egg = pal_egg
-        self.rem_egg = rem_egg
         self.series_id = series_id
         self.has_animation = False
         self.has_hqimage = False
@@ -234,8 +231,6 @@ class Monster(SimpleSqlItem):
             'buy_mp',
             'reg_date',
             'series_id',
-            'pal_egg',
-            'rem_egg',
             'has_animation',
             'has_hqimage',
         ]
@@ -526,6 +521,7 @@ class Evolution(SimpleSqlItem):
         return Evolution(
             evolution_id=None,  # Key that is looked up or inserted
             evolution_type=evolution_type,
+            reversible=reversible,
             from_id=convert(card.ancestor_id),
             to_id=convert(card.monster_no),
             mat_1_id=safe_convert(card.evo_mat_id_1),
@@ -537,6 +533,7 @@ class Evolution(SimpleSqlItem):
     def __init__(self,
                  evolution_id: int = None,
                  evolution_type: int = None,
+                 reversible: bool = None,
                  from_id: MonsterId = None,
                  to_id: MonsterId = None,
                  mat_1_id: MonsterId = None,
@@ -547,6 +544,7 @@ class Evolution(SimpleSqlItem):
                  tstamp: int = None):
         self.evolution_id = evolution_id
         self.evolution_type = evolution_type
+        self.reversible = reversible
         self.from_id = from_id
         self.to_id = to_id
         self.mat_1_id = mat_1_id

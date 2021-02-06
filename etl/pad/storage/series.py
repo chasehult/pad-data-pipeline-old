@@ -12,18 +12,21 @@ class Series(SimpleSqlItem):
         return Series(series_id=o['series_id'],
                       name_ja=o['name_ja'],
                       name_en=o['name_en'],
-                      name_ko=o['name_ko'])
+                      name_ko=o['name_ko'],
+                      series_type=o.get('series_type'))
 
     def __init__(self,
                  series_id: int = None,
                  name_ja: str = None,
                  name_en: str = None,
                  name_ko: str = None,
+                 series_type: str = None,
                  tstamp: int = None):
         self.series_id = series_id
         self.name_ja = name_ja
         self.name_en = name_en
         self.name_ko = name_ko
+        self.series_type = series_type
         self.tstamp = tstamp
 
     def __str__(self):

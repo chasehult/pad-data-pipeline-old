@@ -453,6 +453,7 @@ DROP TABLE IF EXISTS `evolutions`;
 CREATE TABLE `evolutions` (
   `evolution_id` int(11) NOT NULL AUTO_INCREMENT,
   `evolution_type` int(11) NOT NULL,
+  `reversible` tinyint(1) NOT NULL,
   `from_id` int(11) NOT NULL,
   `to_id` int(11) NOT NULL,
   `mat_1_id` int(11) NOT NULL,
@@ -623,6 +624,7 @@ CREATE TABLE `monsters` (
   `type_2_id` int(11) DEFAULT NULL,
   `type_3_id` int(11) DEFAULT NULL,
   `inheritable` tinyint(1) NOT NULL,
+  `stackable` tinyint(1) NOT NULL,
   `fodder_exp` int(11) NOT NULL,
   `sell_gold` int(11) NOT NULL,
   `sell_mp` int(11) NOT NULL,
@@ -631,8 +633,6 @@ CREATE TABLE `monsters` (
   `on_jp` tinyint(1) NOT NULL,
   `on_na` tinyint(1) NOT NULL,
   `on_kr` tinyint(1) NOT NULL,
-  `pal_egg` tinyint(1) NOT NULL,
-  `rem_egg` tinyint(1) NOT NULL,
   `series_id` int(11) NOT NULL,
   `super_awakenings` text NOT NULL,
   `has_animation` tinyint(1) NOT NULL DEFAULT '0',
@@ -793,6 +793,7 @@ CREATE TABLE `series` (
   `name_ja` text NOT NULL,
   `name_en` text NOT NULL,
   `name_ko` text NOT NULL,
+  `series_type` text,
   `tstamp` int(11) NOT NULL,
   PRIMARY KEY (`series_id`),
   KEY `tstamp` (`tstamp`)
