@@ -212,7 +212,7 @@ class PadApiClient(object):
         self.recommended_helpers_data = None
 
         # HTTP session
-        self.session = requests.Session(headers=self.default_headers)
+        self.session = requests.Session()
         
         # Failcount for res!=0 only. Resets every success.
         self.resfails = 0
@@ -394,9 +394,9 @@ class PadApiClient(object):
 
     def get_json_results(self, url, post_data=None):
         if post_data is not None:
-            r = self.session.post(url, data=post_data)
+            r = self.session.post(url, data=post_data, headers=self.default_headers)
         else:
-            r = self.session.get(url)
+            r = self.session.get(url, headers=self.default_headers)
         r.raise_for_status()  #May raise
         result_json = r.json()  #May raise
         response_code = result_json['res']  #May raise
