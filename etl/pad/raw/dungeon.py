@@ -167,7 +167,7 @@ class Dungeon(pad_util.Printable):
         self.remaining_fields = raw[8:]
 
         for prefix, dungeon_type in prefix_to_dungeontype.items():
-            if self.clean_name.startswith(prefix):
+            while self.clean_name.startswith(prefix):
                 self.dungeon_type = dungeon_type
                 self.clean_name = self.clean_name[len(prefix):]
                 break
