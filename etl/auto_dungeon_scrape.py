@@ -158,9 +158,9 @@ def load_dungeons(args, db_wrapper, current_dungeons, api_client):
                             brc = brc2
 
                     if brc.code == 8:
-                        print(f"Failed to enter. Skipping dungeon. ({brc})")
-                        fail_logger.warning(f"Failed to enter dungeon {dungeon.clean_name} ({dungeon_id})"
-                                            f" on floor {floor_id}.\n{brc}")
+                        # print(f"Failed to enter. Skipping dungeon. ({brc})")
+                        # fail_logger.warning(f"Failed to enter dungeon {dungeon.clean_name} ({dungeon_id})"
+                        #                     f" on floor {floor_id}.\n{brc}")
                         break
                     elif brc.code != 0:
                         raise
