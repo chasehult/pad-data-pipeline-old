@@ -29,9 +29,9 @@ from pad.storage_processor.skill_tag_processor import SkillTagProcessor
 from pad.storage_processor.timestamp_processor import TimestampProcessor
 
 logging.basicConfig(
-    format='%(asctime)s %(levelname)-8s %(message)s',
+    format='[%(asctime)s] %(levelname)-8s %(message)s',
     level=logging.INFO,
-    datefmt='%Y-%m-%d %H:%M:%S')
+    datefmt='%H:%M:%S')
 logging.getLogger().setLevel(logging.DEBUG)
 
 logger = logging.getLogger('processor')

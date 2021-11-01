@@ -25,7 +25,6 @@ class DungeonContentProcessor(object):
     def process(self, db: DbWrapper):
         logger.info('loading dungeon contents')
         self._process_dungeon_contents(db)
-        logger.info('loading dungeon rewards')
         self._process_dungeon_rewards(db)
         # TODO: support multiple rewards
 
