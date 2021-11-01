@@ -106,6 +106,7 @@ class DbWrapper(object):
 
     def custom_load_multiple_objects(self, obj_type, lookup_sql: str):
         data = self.fetch_data(lookup_sql)
+        logger.info('fetched')
         return [obj_type(**_process_col_mappings(obj_type, d)) for d in data]
 
     def check_existing(self, sql: str):
