@@ -57,7 +57,7 @@ class DungeonContentProcessor(object):
         floor_id = sub_dungeon.sub_dungeon_id % 1000
         sql = 'SELECT * FROM wave_data WHERE dungeon_id={} and floor_id={}'.format(
             dungeon.dungeon_id, floor_id)
-        logger.info('starting')
+        logger.info(f'starting {sql}')
         wave_items = db.custom_load_multiple_objects(WaveItem, sql)
         logger.info('stopping')
 
