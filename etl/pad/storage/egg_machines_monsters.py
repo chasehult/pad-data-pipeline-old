@@ -34,5 +34,4 @@ class EggMachinesMonster(SimpleSqlItem):
         return [self._key()]
 
     def __str__(self):
-        return 'EggMachineMonster ({}-{}-{}-{})'.format(self.egg_machine_monster_id, self.monster_id, self.roll_chance,
-                                                        self.egg_machine_id)
+        return 'EggMachineMonster ()'.format(self.key_str())
