@@ -21,15 +21,17 @@ python3 "${ETL_DIR}/media_copy.py" \
   --base_dir="${IMG_DIR}" \
   --output_dir="${DADGUIDE_MEDIA_DIR}"
 
-# Spammy commands
-echo "Rsyncing from repo to images dir"
-set +x
-rsync -t "${ETL_IMAGES_DIR}"/latents/* "${DADGUIDE_MEDIA_DIR}/latents"
-rsync -t "${ETL_IMAGES_DIR}"/awakenings/* "${DADGUIDE_MEDIA_DIR}/awakenings"
-rsync -t "${ETL_IMAGES_DIR}"/badges/* "${DADGUIDE_MEDIA_DIR}/badges"
-rsync -t "${ETL_IMAGES_DIR}"/types/* "${DADGUIDE_MEDIA_DIR}/types"
-rsync -t "${ETL_IMAGES_DIR}"/icons/* "${DADGUIDE_MEDIA_DIR}/icons"
-set -x
+# Removed due to DMCA takedown
+
+## Spammy commands
+#echo "Rsyncing from repo to images dir"
+#set +x
+#rsync -t "${ETL_IMAGES_DIR}"/latents/* "${DADGUIDE_MEDIA_DIR}/latents"
+#rsync -t "${ETL_IMAGES_DIR}"/awakenings/* "${DADGUIDE_MEDIA_DIR}/awakenings"
+#rsync -t "${ETL_IMAGES_DIR}"/badges/* "${DADGUIDE_MEDIA_DIR}/badges"
+#rsync -t "${ETL_IMAGES_DIR}"/types/* "${DADGUIDE_MEDIA_DIR}/types"
+#rsync -t "${ETL_IMAGES_DIR}"/icons/* "${DADGUIDE_MEDIA_DIR}/icons"
+#set -x
 
 echo "Syncing raw data to AWS s3"
 aws s3 sync --acl=private ${DADGUIDE_DATA_DIR} s3://tsubakibotpad
