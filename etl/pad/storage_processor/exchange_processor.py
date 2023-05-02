@@ -1,10 +1,9 @@
 import logging
-import os
 
-from pad.db.db_util import DbWrapper
 from pad.common.shared_types import Server
-from pad.storage.exchange import Exchange
+from pad.db.db_util import DbWrapper
 from pad.raw_processor import crossed_data
+from pad.storage.exchange import Exchange, ExchangeMonster
 
 logger = logging.getLogger('processor')
 
@@ -24,3 +23,6 @@ class ExchangeProcessor(object):
                 logger.debug('Creating exchange: %s', raw)
                 item = Exchange.from_raw_exchange(raw)
                 db.insert_or_update(item)
+                for m_id, amount in raw.required_monsters.items():
+                    item = ExchangeMonster.from_raw(raw, m_id, amount)
+                    db.insert_or_update(item)

@@ -109,7 +109,7 @@ def parse_args():
                              help="Path to the root folder containing images, voices, etc")
 
     proc_group = parser.add_argument_group("Processors")
-    proc_group.add_argument("--processors", default="All",
+    proc_group.add_argument("--processors", "--processor", default="All",
                             help="Comma-separated specific processors to run.")
     proc_group.add_argument("--server", default="COMBINED", help="Server to build for")
 

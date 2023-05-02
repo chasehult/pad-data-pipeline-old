@@ -2,17 +2,18 @@
 Parses monster exchange data.
 """
 
-import json
-import os
-from typing import List
+import logging
+from typing import List, Dict, Optional
 
 from pad.common import pad_util
 from pad.common.pad_util import Printable
-from pad.common.shared_types import Server
+from pad.common.shared_types import MonsterNo
 # The typical JSON file name for this data.
 from pad.common.shared_types import Server
 
 FILE_NAME = 'mdatadl.json'
+
+human_fix_logger = logging.getLogger('human_fix')
 
 
 class Exchange(Printable):
@@ -32,7 +33,7 @@ class Exchange(Printable):
         self.menu_idx = int(raw[3])
 
         # Trade monster ID
-        self.monster_id = int(raw[4])
+        self.monster_id = MonsterNo(int(raw[4]))
 
         # Trade monster info
         self.monster_level = int(raw[5])
@@ -40,6 +41,8 @@ class Exchange(Printable):
 
         self.monster_max_skill = bool(monster_flags & 1)
         self.monster_max_awoken = bool(monster_flags & 2)
+        if monster_flags & ~3:
+            human_fix_logger.warning(f"Unknown exchange monster flag: {monster_flags}")
 
         # Trade monster amount
         self.monster_amount = int(raw[7])
@@ -74,11 +77,19 @@ class Exchange(Printable):
         # Flags, e.g. restricted
         self.flag_type = int(raw[14])
         self.no_dupes = bool(self.flag_type & 1)
-        self.restricted = bool(self.flag_type & 2)
-        self.multi_exchange = bool(self.flag_type & 4)
+        self.restricted = bool(self.flag_type & 2)  # One-time only
+        self.multi_exchange = bool(self.flag_type & 4)  # Can recieve multiple at once
+        self.plural_exchange = bool(self.flag_type & 8)  # Recieve multiple of target for one exchange
+        self.individual_required_count = bool(self.flag_type & 8)
+        if monster_flags & ~7:
+            human_fix_logger.warning(f"Unknown exchange type flag: {self.flag_type}")
 
         # Options for trading the monster
-        self.required_monsters = list(map(int, raw[15:]))
+        self.required_monsters: Dict[MonsterNo, Optional[int]]
+        if self.individual_required_count:
+            self.required_monsters = dict(zip(map(int, raw[15::2]), map(int, raw[16::2])))
+        else:
+            self.required_monsters = dict(zip(map(int, raw[15:]), [None]*len(raw[15:])))
 
     def __str__(self):
         return 'Exchange({} {} - {} - {}/{})'.format(self.server, self.monster_id, len(self.required_monsters),
